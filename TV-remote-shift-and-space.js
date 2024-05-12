@@ -71,3 +71,5 @@ function tvRemote(words) {
   }
   return presses;
 }
+
+// or
