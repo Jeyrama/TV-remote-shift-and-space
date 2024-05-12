@@ -73,3 +73,22 @@ function tvRemote(words) {
 }
 
 // or
+
+const KEYBOARD = ['abcde123',
+                  'fghij456',
+                  'klmno789',
+                  'pqrst.@0',
+                  'uvwxyz_/',
+                  '^ %%%%%%'];
+
+const tvRemote = words => {
+  const keyboard = KEYBOARD.join``;
+  words = ('a' + words).replace(/[^a-z]+|[^A-Z]+/g, '^$&').slice(2).toLowerCase();
+  
+  const path = (symb1, symb2 = 'a') => {
+    const [[row1, col1], [row2, col2]] = [symb1, symb2].map(symb => [(symbIdx = keyboard.indexOf(symb)) >> 3, symbIdx % 8]);
+    return Math.abs(row1 - row2) + Math.abs(col1 - col2);
+  }
+  
+  return [...words].reduce((acc, symb, idx) => acc + path(symb, words[idx-1]) + 1, 0);
+}
